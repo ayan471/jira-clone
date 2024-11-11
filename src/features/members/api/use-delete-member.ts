@@ -19,20 +19,17 @@ export const useDeleteMember = () => {
       const response = await client.api.members[":memberId"]["$delete"]({
         param,
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete member");
-      }
-
+      if (!response.ok) throw new Error("Failed to delete member");
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Member deleted");
+      toast.success("Member deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["members"] });
     },
     onError: () => {
       toast.error("Failed to delete member");
     },
   });
+
   return mutation;
 };

@@ -40,7 +40,7 @@ const app = new Hono()
     zValidator("form", createWorkspaceSchema),
     sessionMiddleware,
     async (c) => {
-      const databses = c.get("databases");
+      const databases = c.get("databases");
       const storage = c.get("storage");
       const user = c.get("user");
 
@@ -64,7 +64,7 @@ const app = new Hono()
         ).toString("base64")}`;
       }
 
-      const workspace = await databses.createDocument(
+      const workspace = await databases.createDocument(
         DATABASE_ID,
         WORKSPACES_ID,
         ID.unique(),
@@ -76,7 +76,7 @@ const app = new Hono()
         }
       );
 
-      await databses.createDocument(DATABASE_ID, MEMBERS_ID, ID.unique(), {
+      await databases.createDocument(DATABASE_ID, MEMBERS_ID, ID.unique(), {
         userId: user.$id,
         workspaceId: workspace.$id,
         role: MemberRole.ADMIN,
